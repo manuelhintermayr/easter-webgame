@@ -1,5 +1,5 @@
 // Simple 2D Game with Player, Eggs, Objects, and NPCs
-const width = 10;
+const width = 30;
 const height = 20;
 const spritePositions = {
     down: [0, 0],
@@ -57,6 +57,9 @@ let pendingTip = null;
 // Function to initialize the game
 function drawMap() {
     game.innerHTML = "";
+    game.style.gridTemplateColumns = 'repeat(' + width + ', 32px)';
+    game.style.gridTemplateRows = 'repeat(' + width + ', 32px)';
+
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const tile = document.createElement("div");
