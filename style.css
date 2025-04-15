@@ -1,3 +1,4 @@
+/** Base Styles **/
 body {
     margin: 0;
     background: #000;
@@ -10,7 +11,14 @@ body {
 
 #hud {
     margin-top: 10px;
+    background: #000;
+    padding: 5px 15px;
+    font-family: monospace;
     font-size: 18px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #game {
@@ -22,6 +30,49 @@ body {
     image-rendering: pixelated;
 }
 
+#dialogBox {
+    margin-top: 10px;
+    width: 320px;
+    min-height: 80px;
+    background: #f4e9cd;
+    border: 3px double #222;
+    box-shadow: 4px 4px 0 #000;
+    padding: 10px;
+    color: #111;
+    font-family: monospace;
+    font-size: 14px;
+    position: relative;
+    display: none;
+}
+
+#dialogText {
+    white-space: pre-wrap;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dialog-buttons button {
+    background: #fff;
+    border: 2px solid #000;
+    font-family: monospace;
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 2px 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.dialog-buttons button:hover {
+    background: #eee;
+    transform: scale(1.05);
+}
+
+
+/** Game Styles **/
 .tile,
 .tile.wall_below::after {
     width: 32px;
@@ -116,56 +167,4 @@ body {
 .object {
     background-image: url("objekte.png");
     z-index: 1;
-}
-
-#dialogBox {
-    margin-top: 10px;
-    width: 320px;
-    min-height: 80px;
-    background: #f4e9cd;
-    border: 3px double #222;
-    box-shadow: 4px 4px 0 #000;
-    padding: 10px;
-    color: #111;
-    font-family: monospace;
-    font-size: 14px;
-    position: relative;
-    display: none;
-}
-
-#dialogText {
-    white-space: pre-wrap;
-}
-
-.dialog-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.dialog-buttons button {
-    background: #fff;
-    border: 2px solid #000;
-    font-family: monospace;
-    font-size: 14px;
-    margin: 0 10px;
-    padding: 2px 12px;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-
-.dialog-buttons button:hover {
-    background: #eee;
-    transform: scale(1.05);
-}
-
-#hud {
-    background: #000;
-    padding: 5px 15px;
-    font-family: monospace;
-    font-size: 18px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
