@@ -96,7 +96,7 @@ function drawMap() {
                 n.classList.add("entity", "npc");
                 const [bgX, bgY] = npc.imagePosition;
                 n.style.backgroundPosition = `-${bgX}px -${bgY}px`;
-                
+
                 tile.appendChild(n);
             }
 
@@ -176,11 +176,33 @@ function move(dx, dy, dir) {
 // Functions bound directly to the web page
 document.addEventListener("keydown", (e) => {
     if (dialogBox.style.display === "block") return;
-    if (e.key === "w") move(0, -1, "up");
-    if (e.key === "s") move(0, 1, "down");
-    if (e.key === "a") move(-1, 0, "left");
-    if (e.key === "d") move(1, 0, "right");
-    if (e.key === " ") checkInteraction();
+
+    switch (e.key) {
+        case "w":
+        case "ArrowUp":
+            move(0, -1, "up");
+            break;
+
+        case "s":
+        case "ArrowDown":
+            move(0, 1, "down");
+            break;
+
+        case "a":
+        case "ArrowLeft":
+            move(-1, 0, "left");
+            break;
+
+        case "d":
+        case "ArrowRight":
+            move(1, 0, "right");
+            break;
+
+        case " ":
+        case "Enter":
+            checkInteraction();
+            break;
+    }
 });
 
 drawMap();
