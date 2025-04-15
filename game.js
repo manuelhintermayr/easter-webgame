@@ -32,20 +32,23 @@ const npcs = [
     {
         x: 3,
         y: 8,
-        text: "Ich habe ein Ei zuletzt in der Nähe eines Laptops gesehen...",
-        tip: "Schau mal bei den Schreibtischen.",
+        text: "The last time I saw an egg was near a laptop...",
+        tip: "Have a look at the desks.",
+        imagePosition: [105, 11],
     },
     {
         x: 6,
         y: 6,
-        text: "Ich glaube da war eines bei der Kaffeemaschine!",
-        tip: "Vielleicht beim Fenster.",
+        text: "I think there was one by the coffee machine!",
+        tip: "Maybe by the window.",
+        imagePosition: [56, 91],
     },
     {
-        x: 4,
-        y: 4,
-        text: "Ein Ei versteckt sich hinter dem Bücherregal.",
-        tip: "Unten rechts vielleicht?",
+        x: 20,
+        y: 12,
+        text: "An egg is hiding behind the bookshelf.",
+        tip: "Bottom right perhaps?",
+        imagePosition: [146, 84],
     },
 ];
 const game = document.getElementById("game");
@@ -59,7 +62,7 @@ let pendingTip = null;
 function drawMap() {
     game.innerHTML = "";
     game.style.gridTemplateColumns = 'repeat(' + width + ', 32px)';
-    game.style.gridTemplateRows = 'repeat(' + width + ', 32px)';
+    game.style.gridTemplateRows = 'repeat(' + height + ', 32px)';
 
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
@@ -91,6 +94,9 @@ function drawMap() {
             if (npc) {
                 const n = document.createElement("div");
                 n.classList.add("entity", "npc");
+                const [bgX, bgY] = npc.imagePosition;
+                n.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+                
                 tile.appendChild(n);
             }
 

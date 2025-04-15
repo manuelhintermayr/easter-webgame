@@ -139,7 +139,7 @@ body {
     top: 0;
     left: 0;
     background-repeat: no-repeat;
-    background-size: 285px 192px;
+    background-size: 210px 140px;
 }
 
 .player {
@@ -154,18 +154,17 @@ body {
 }
 
 .npc {
-    background-position: -32px 0;
-    /* kann extra NPC sheet sein */
-    background-position: -32px 0;
+    background-position: -105px -11px;
+    background-size: 300px 185px;
     z-index: 2;
 }
 
 .egg {
-    background-position: -60px -10px;
+    background-position: -42px 2px;
     z-index: 1;
 }
 
 .object {
-    background-position: -60px 10px;
+    background-position: -44px -32px;
     z-index: 1;
 }
