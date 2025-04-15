@@ -7,20 +7,20 @@ const spritePositions = {
     left: [-64, 0],
     right: [-96, 0],
 };
-const game = document.getElementById("game");
 const player = { x: 5, y: 15, direction: "down", frame: 0 };
 let eggs = [
-    [1, 3],
-    [2, 5],
-    [3, 3],
-    [4, 9],
-    [5, 2],
-    [6, 7],
-    [7, 1],
-    [8, 4],
-    [9, 8],
-    [1, 9],
+    [2, 2],
+    [6, 4],
+    [10, 7],
+    [14, 3],
+    [18, 9],
+    [22, 6],
+    [25, 11],
+    [27, 16],
+    [20, 14],
+    [8, 18],
 ];
+
 const objects = [
     [1, 3],
     [3, 1],
@@ -30,8 +30,8 @@ const objects = [
 ];
 const npcs = [
     {
-        x: 2,
-        y: 2,
+        x: 3,
+        y: 8,
         text: "Ich habe ein Ei zuletzt in der Nähe eines Laptops gesehen...",
         tip: "Schau mal bei den Schreibtischen.",
     },
@@ -43,11 +43,12 @@ const npcs = [
     },
     {
         x: 4,
-        y: 1,
+        y: 4,
         text: "Ein Ei versteckt sich hinter dem Bücherregal.",
         tip: "Unten rechts vielleicht?",
     },
 ];
+const game = document.getElementById("game");
 const eggCount = document.getElementById("eggCount");
 const dialogBox = document.getElementById("dialogBox");
 const dialogText = document.getElementById("dialogText");
@@ -125,6 +126,7 @@ function tryPickup(x, y) {
         if (Math.abs(eggs[i][0] - x) + Math.abs(eggs[i][1] - y) === 1) {
             eggs.splice(i, 1);
             eggCount.textContent = 10 - eggs.length;
+            drawMap();
             return true;
         }
     }

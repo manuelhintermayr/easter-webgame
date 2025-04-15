@@ -132,17 +132,18 @@ body {
 }
 
 .entity {
+    background-image: url("sprites.png");
     width: 32px;
     height: 32px;
     position: absolute;
     top: 0;
     left: 0;
     background-repeat: no-repeat;
-    background-size: 128px 128px;
+    background-size: 285px 192px;
 }
 
 .player {
-    background-image: url("player_male.png");
+    background-image: url("player.png");
     background-size: 133px 32px;
     width: 32px;
     height: 32px;
@@ -153,18 +154,18 @@ body {
 }
 
 .npc {
-    background-image: url("egg.png");
+    background-position: -32px 0;
     /* kann extra NPC sheet sein */
     background-position: -32px 0;
     z-index: 2;
 }
 
 .egg {
-    background-image: url("egg.png");
+    background-position: -60px -10px;
     z-index: 1;
 }
 
 .object {
-    background-image: url("objekte.png");
+    background-position: -60px 10px;
     z-index: 1;
 }
