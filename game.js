@@ -1,17 +1,13 @@
+// Simple 2D Game with Player, Eggs, Objects, and NPCs
+const width = 10;
+const height = 20;
 const spritePositions = {
     down: [0, 0],
     up: [-32, 0],
     left: [-64, 0],
     right: [-96, 0],
 };
-const width = 10;
-const height = 20;
 const game = document.getElementById("game");
-const eggCount = document.getElementById("eggCount");
-const dialogBox = document.getElementById("dialogBox");
-const dialogText = document.getElementById("dialogText");
-const dialogChoices = document.getElementById("dialogChoices");
-
 const player = { x: 5, y: 15, direction: "down", frame: 0 };
 let eggs = [
     [1, 3],
@@ -52,7 +48,13 @@ const npcs = [
         tip: "Unten rechts vielleicht?",
     },
 ];
+const eggCount = document.getElementById("eggCount");
+const dialogBox = document.getElementById("dialogBox");
+const dialogText = document.getElementById("dialogText");
+const dialogChoices = document.getElementById("dialogChoices");
+let pendingTip = null;
 
+// Function to initialize the game
 function drawMap() {
     game.innerHTML = "";
     for (let y = 0; y < height; y++) {
@@ -126,8 +128,6 @@ function tryPickup(x, y) {
     return false;
 }
 
-let pendingTip = null;
-
 function checkInteraction() {
     for (let npc of npcs) {
         if (Math.abs(npc.x - player.x) + Math.abs(npc.y - player.y) === 1) {
@@ -162,6 +162,7 @@ function move(dx, dy, dir) {
     drawMap();
 }
 
+// Functions bound directly to the web page
 document.addEventListener("keydown", (e) => {
     if (dialogBox.style.display === "block") return;
     if (e.key === "w") move(0, -1, "up");
