@@ -18,6 +18,39 @@
       <button onclick="handleChoice(true)">Give me more hints 🥲</button>
     </div>
   </div>
+
+  <div id="controls-container">
+    <div id="controls-hint">
+      <h3>🕹️ How to play:</h3>
+      <p>
+        Move using: <br />
+        <span class="kbd">W</span>
+        <span class="kbd">A</span>
+        <span class="kbd">S</span>
+        <span class="kbd">D</span> or
+        <span class="kbd">⬆️</span>
+        <span class="kbd">⬅️</span>
+        <span class="kbd">⬇️</span>
+        <span class="kbd">➡️</span><br /><br />
+        Talk / collect eggs using: <br />
+        <span class="kbd">SPACE</span> or
+        <span class="kbd">ENTER</span><br /><br />
+        Or use the touch D-Pad ➡️
+      </p>
+    </div>
+    <div id="mobile-controls">
+      <div class="dpad">
+        <button onclick="move(0, -1, 'up')">⬆️</button>
+        <div>
+          <button onclick="move(-1, 0, 'left')">⬅️</button>
+          <button onclick="checkInteraction()">⏹️</button>
+          <button onclick="move(1, 0, 'right')">➡️</button>
+        </div>
+        <button onclick="move(0, 1, 'down')">⬇️</button>
+      </div>
+    </div>
+  </div>
+
   <script src="game.js"></script>
 </body>
 

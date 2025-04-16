@@ -71,6 +71,67 @@ body {
     transform: scale(1.05);
 }
 
+/** Mobile Controls **/
+#controls-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    /* Damit es auf kleinen Geräten untereinander springt */
+}
+
+#controls-hint {
+    background: #222;
+    color: #fff;
+    padding: 10px 15px;
+    font-family: monospace;
+    border-radius: 8px;
+    text-align: left;
+    width: 320px;
+    box-shadow: 2px 2px 0 #000;
+}
+
+.kbd {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 14px;
+    font-family: monospace;
+    margin: 0 2px;
+}
+
+#mobile-controls {
+    text-align: center;
+}
+
+.dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.dpad div {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.dpad button {
+    font-size: 24px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 2px 2px 0 #aaa;
+    cursor: pointer;
+}
+
 
 /** Game Styles **/
 .tile,
