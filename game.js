@@ -57,6 +57,7 @@ const dialogBox = document.getElementById("dialogBox");
 const dialogText = document.getElementById("dialogText");
 const dialogChoices = document.getElementById("dialogChoices");
 let pendingTip = null;
+let isTipDisplayed = false;
 
 // Function to initialize the game
 function drawMap() {
@@ -154,8 +155,9 @@ function checkInteraction() {
 
 function handleChoice(choice) {
     if (choice && pendingTip) {
-        dialogText.textContent = "🧠 Hinweis: " + pendingTip;
+        dialogText.textContent = "🧠 Tip:" + pendingTip;
         dialogChoices.style.display = "none";
+        isTipDisplayed = true;
     } else {
         dialogBox.style.display = "none";
     }
@@ -175,29 +177,28 @@ function move(dx, dy, dir) {
 
 // Functions bound directly to the web page
 document.addEventListener("keydown", (e) => {
-    if (dialogBox.style.display === "block") return;
+    if (dialogBox.style.display === "block") {
+        dialogBox.style.display = "none";
+        isTipDisplayed = false;
+    }
 
     switch (e.key) {
         case "w":
         case "ArrowUp":
             move(0, -1, "up");
             break;
-
         case "s":
         case "ArrowDown":
             move(0, 1, "down");
             break;
-
         case "a":
         case "ArrowLeft":
             move(-1, 0, "left");
             break;
-
         case "d":
         case "ArrowRight":
             move(1, 0, "right");
             break;
-
         case " ":
         case "Enter":
             checkInteraction();
