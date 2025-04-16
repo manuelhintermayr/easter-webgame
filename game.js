@@ -1,41 +1,73 @@
 // Simple 2D Game with Player, Eggs, Objects, and NPCs
-const width = 30;
-const height = 20;
-const spritePositions = {
+const gameWidth = 30;
+const gameHeight = 20;
+
+const player = { x: 14, y: 18, direction: "up", frame: 0 };
+const playerSpritePositions = {
     down: [0, 0],
     up: [-32, 0],
     left: [-64, 0],
     right: [-96, 0],
 };
-const player = { x: 5, y: 15, direction: "down", frame: 0 };
 const eggs = [
+    // Left:
+    [10, 16],
     [2, 2],
     [6, 4],
-    [10, 7],
-    [14, 3],
-    [18, 9],
-    [22, 6],
-    [25, 11],
-    [3, 14],
-    [1, 16],
+    [3, 11],
     [8, 18],
+
+    // Middle:
+    [11, 7],
+    [14, 3],
+
+    // Right:
+    [18, 9],
+    [22, 10],
+    [25, 11],
 ];
 const flowers = [
+    // Left:
     [1, 3],
-    [3, 1],
+    [10, 16],
     [5, 5],
     [6, 2],
-    [7, 7],
+
+    // Center:
+    [16, 6],
+
+    // Right:
+];
+const upperWallsRange = [
+    // Left:
+    [[0, 9], [10, 9]],
+    [[0, 15], [10, 15]],
+
+    // Right:
+    [[0, 0], [30, 0]],
+    [[17, 8], [30, 8]],
+];
+const lowerWallsRange = [
+    // Left:
+    [[0, 10], [10, 10]],
+    [[0, 16], [10, 16]],
+
+    // Right:
+    [[0, 1], [30, 1]],
+    [[17, 9], [30, 9]],
 ];
 const voidRanges = [
-    [[30, 0], [17, 0]],
-    [[30, 1], [17, 1]],
-    [[30, 2], [17, 2]],
-    [[30, 3], [17, 3]],
-    [[30, 4], [17, 4]],
-    [[30, 5], [17, 5]],
-    [[30, 6], [17, 6]],
-    [[30, 7], [17, 7]],
+    // Left:
+    [[0, 6], [10, 6]],
+    [[0, 7], [10, 7]],
+    [[0, 8], [10, 8]],
+    [[0, 13], [10, 13]],
+    [[0, 14], [10, 14]],
+    [[0, 19], [10, 19]],
+
+    // Right:
+    [[17, 6], [30, 6]],
+    [[17, 7], [30, 7]],
     [[30, 15], [17, 15]],
     [[30, 16], [17, 16]],
     [[30, 17], [17, 17]],
@@ -44,43 +76,52 @@ const voidRanges = [
 ];
 const npcs = [
     {
-        x: 3,
-        y: 8,
-        text: "The last time I saw an egg was near a laptop...",
-        tip: "Have a look at the desks.",
+        name: "Barbara",
+        x: 0,
+        y: 18,
+        text: "The last time I saw an egg was near a flower...",
+        tip: "Have a look behind the flowers in this room.",
         imagePosition: [105, 11],
     },
     {
-        x: 6,
-        y: 6,
+        name: "Bob",
+        x: 16,
+        y: 7,
         text: "I think there was one by the coffee machine!",
         tip: "Maybe by the window.",
         imagePosition: [56, 91],
     },
     {
-        x: 20,
-        y: 12,
+        name: "Alice",
+        x: 27,
+        y: 2,
         text: "An egg is hiding behind the bookshelf.",
         tip: "Bottom right perhaps?",
         imagePosition: [146, 84],
     },
 ];
+
 const game = document.getElementById("game");
 const eggCount = document.getElementById("eggCount");
 const dialogBox = document.getElementById("dialogBox");
 const dialogText = document.getElementById("dialogText");
 const dialogChoices = document.getElementById("dialogChoices");
+
 let pendingTip = null;
 let isTipDisplayed = false;
+
 
 // Function to initialize the game
 function drawMap() {
     game.innerHTML = "";
-    game.style.gridTemplateColumns = 'repeat(' + width + ', 32px)';
-    game.style.gridTemplateRows = 'repeat(' + height + ', 32px)';
+    game.style.gridTemplateColumns = 'repeat(' + gameWidth + ', 32px)';
+    game.style.gridTemplateRows = 'repeat(' + gameHeight + ', 32px)';
 
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
+    for (let y = 0; y < gameHeight; y++) {
+        for (let x = 0; x < gameWidth; x++) {
+            const isUpperWallTile = isUpperWall(x, y);
+            const isLowerWallTile = isLowerWall(x, y);
+            const isVoidTile = isVoid(x, y);
             const egg = eggs.find((e) => e[0] === x && e[1] === y);
             const flower = flowers.find((o) => o[0] === x && o[1] === y);
             const npc = npcs.find((n) => n.x === x && n.y === y);
@@ -88,11 +129,14 @@ function drawMap() {
             const tile = document.createElement("div");
             tile.classList.add("tile");
 
-            if (y === 0) {
+            if (isUpperWallTile) {
                 tile.classList.add("wall_above");
             }
-            if (y === 1) {
+            if (isLowerWallTile) {
                 tile.classList.add("wall_below");
+            }
+            if (isVoidTile) {
+                tile.classList.add("void");
             }
 
             if (egg) {
@@ -107,13 +151,6 @@ function drawMap() {
                 tile.appendChild(o);
             }
 
-            const isVoidTile = isVoid(x, y);
-            if (isVoidTile) {
-                const v = document.createElement("div");
-                v.classList.add("entity", "void");
-                tile.appendChild(v);
-            }
-
             if (npc) {
                 const n = document.createElement("div");
                 n.classList.add("entity", "npc");
@@ -125,7 +162,7 @@ function drawMap() {
             if (player.x === x && player.y === y) {
                 const p = document.createElement("div");
                 p.classList.add("entity", "player");
-                const [bgX, bgY] = spritePositions[player.direction];
+                const [bgX, bgY] = playerSpritePositions[player.direction];
                 p.style.backgroundPosition = `${bgX}px ${bgY}px`;
                 tile.appendChild(p);
             }
@@ -136,14 +173,12 @@ function drawMap() {
 }
 
 function isBlocked(x, y) {
-    if (x < 0 || y < 0 || x >= width || y >= height) return true;
+    if (x < 0 || y < 0 || x >= gameWidth || y >= gameHeight) return true;
 
-    // Block upper walls
-    if (y === 0) return true;
-
+    if (isUpperWall(x, y)) return true;
+    if (isVoid(x, y)) return true;
     if (eggs.some((e) => e[0] === x && e[1] === y)) return true;
     if (flowers.some((o) => o[0] === x && o[1] === y)) return true;
-    if (isVoid(x, y)) return true;
     if (npcs.some((n) => n.x === x && n.y === y)) return true;
 
     return false;
@@ -165,6 +200,37 @@ function isVoid(x, y) {
     return false;
 }
 
+function isUpperWall(x, y) {
+    for (let range of upperWallsRange) {
+        const [start, end] = range;
+        const [x1, y1] = start;
+        const [x2, y2] = end;
+
+        if (y === y1 && y === y2) {
+            if (x >= Math.min(x1, x2) && x <= Math.max(x1, x2)) return true;
+        }
+        if (x === x1 && x === x2) {
+            if (y >= Math.min(y1, y2) && y <= Math.max(y1, y2)) return true;
+        }
+    }
+    return false;
+}
+
+function isLowerWall(x, y) {
+    for (let range of lowerWallsRange) {
+        const [start, end] = range;
+        const [x1, y1] = start;
+        const [x2, y2] = end;
+
+        if (y === y1 && y === y2) {
+            if (x >= Math.min(x1, x2) && x <= Math.max(x1, x2)) return true;
+        }
+        if (x === x1 && x === x2) {
+            if (y >= Math.min(y1, y2) && y <= Math.max(y1, y2)) return true;
+        }
+    }
+    return false;
+}
 
 function tryPickup(x, y) {
     for (let i = 0; i < eggs.length; i++) {
