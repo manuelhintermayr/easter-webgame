@@ -164,7 +164,12 @@ body {
     z-index: 1;
 }
 
-.object {
+.flower {
     background-position: -44px -32px;
+    z-index: 1;
+}
+
+.void {
+    background: black;
     z-index: 1;
 }
