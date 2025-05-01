@@ -114,65 +114,61 @@ let isTipDisplayed = false;
 
 
 // Function to initialize the game
+let mapInitialized = false;
+
 function drawMap() {
-    game.innerHTML = "";
-    game.style.gridTemplateColumns = 'repeat(' + gameWidth + ', 32px)';
-    game.style.gridTemplateRows = 'repeat(' + gameHeight + ', 32px)';
+    if (!mapInitialized) {
+        // Map initial zum ersten Mal zeichnen
+        game.innerHTML = "";
+        game.style.gridTemplateColumns = `repeat(${gameWidth}, 32px)`;
+        game.style.gridTemplateRows = `repeat(${gameHeight}, 32px)`;
 
-    for (let y = 0; y < gameHeight; y++) {
-        for (let x = 0; x < gameWidth; x++) {
-            const isUpperWallTile = isUpperWall(x, y);
-            const isLowerWallTile = isLowerWall(x, y);
-            const isVoidTile = isVoid(x, y);
-            const egg = eggs.find((e) => e[0] === x && e[1] === y);
-            const flower = flowers.find((o) => o[0] === x && o[1] === y);
-            const npc = npcs.find((n) => n.x === x && n.y === y);
+        for (let y = 0; y < gameHeight; y++) {
+            for (let x = 0; x < gameWidth; x++) {
+                const tile = document.createElement("div");
+                tile.classList.add("tile");
+                tile.dataset.x = x;
+                tile.dataset.y = y;
 
-            const tile = document.createElement("div");
-            tile.classList.add("tile");
+                if (isUpperWall(x, y)) tile.classList.add("wall_above");
+                if (isLowerWall(x, y)) tile.classList.add("wall_below");
+                if (isVoid(x, y)) tile.classList.add("void");
 
-            if (isUpperWallTile) {
-                tile.classList.add("wall_above");
+                if (flowers.find(f => f[0] === x && f[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "flower");
+                    tile.appendChild(o);
+                }
+
+                const npc = npcs.find(n => n.x === x && n.y === y);
+                if (npc) {
+                    const n = document.createElement("div");
+                    n.classList.add("entity", "npc");
+                    const [bgX, bgY] = npc.imagePosition;
+                    n.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+                    tile.appendChild(n);
+                }
+
+                game.appendChild(tile);
             }
-            if (isLowerWallTile) {
-                tile.classList.add("wall_below");
-            }
-            if (isVoidTile) {
-                tile.classList.add("void");
-            }
-
-            if (egg) {
-                const e = document.createElement("div");
-                e.classList.add("entity", "egg");
-                tile.appendChild(e);
-            }
-
-            if (flower) {
-                const o = document.createElement("div");
-                o.classList.add("entity", "flower");
-                tile.appendChild(o);
-            }
-
-            if (npc) {
-                const n = document.createElement("div");
-                n.classList.add("entity", "npc");
-                const [bgX, bgY] = npc.imagePosition;
-                n.style.backgroundPosition = `-${bgX}px -${bgY}px`;
-                tile.appendChild(n);
-            }
-
-            if (player.x === x && player.y === y) {
-                const p = document.createElement("div");
-                p.classList.add("entity", "player");
-                const [bgX, bgY] = playerSpritePositions[player.direction];
-                p.style.backgroundPosition = `${bgX}px ${bgY}px`;
-                tile.appendChild(p);
-            }
-
-            game.appendChild(tile);
         }
+
+        mapInitialized = true;
+        updateEggs();
+    }
+
+    // Update player position
+    document.querySelectorAll(".player").forEach(el => el.remove());
+    const playerTile = document.querySelector(`.tile[data-x='${player.x}'][data-y='${player.y}']`);
+    if (playerTile) {
+        const p = document.createElement("div");
+        p.classList.add("entity", "player");
+        const [bgX, bgY] = playerSpritePositions[player.direction];
+        p.style.backgroundPosition = `${bgX}px ${bgY}px`;
+        playerTile.appendChild(p);
     }
 }
+
 
 function isBlocked(x, y) {
     if (x < 0 || y < 0 || x >= gameWidth || y >= gameHeight) return true;
@@ -242,12 +238,25 @@ function tryPickup(x, y) {
             if (eggs.length === 0) {
                 endGame();
             } else {
-                drawMap();
+                updateEggs();
             }
             return true;
         }
     }
     return false;
+}
+
+function updateEggs() {
+    document.querySelectorAll(".egg").forEach(el => el.remove());
+
+    eggs.forEach(([x, y]) => {
+        const tile = document.querySelector(`.tile[data-x='${x}'][data-y='${y}']`);
+        if (tile) {
+            const e = document.createElement("div");
+            e.classList.add("entity", "egg");
+            tile.appendChild(e);
+        }
+    });
 }
 
 function checkInteraction() {

@@ -219,13 +219,13 @@ body {
 }
 
 .egg {
-    background-position: -42px 2px;
+    background-position: -38px 2px;
     z-index: 1;
 }
 
 .flower {
     background-position: -44px -32px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .void {
