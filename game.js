@@ -239,7 +239,11 @@ function tryPickup(x, y) {
         if (Math.abs(eggs[i][0] - x) + Math.abs(eggs[i][1] - y) === 1) {
             eggs.splice(i, 1);
             eggCount.textContent = 10 - eggs.length;
-            drawMap();
+            if (eggs.length === 0) {
+                endGame();
+            } else {
+                drawMap();
+            }
             return true;
         }
     }
@@ -285,9 +289,7 @@ function move(dx, dy, dir) {
 // Start of the Game:
 function startGame() {
     const onlyForMainScreen = document.getElementsByClassName("onlyForMainScreen");
-    for (let i = 0; i < onlyForMainScreen.length; i++) {
-        onlyForMainScreen[i].style.display = "none";
-    }
+    onlyForMainScreen[0].style.display = "none";
 
     const startGameButton = document.getElementById("startGameButton");
     startGameButton.style.display = "none";
@@ -305,38 +307,41 @@ function startGame() {
     dialogBox.style.display = "none";
 
     // Functions bound directly to the web page
-    document.addEventListener("keydown", (e) => {
-        if (dialogBox.style.display === "block") {
-            dialogBox.style.display = "none";
-            isTipDisplayed = false;
-        }
-
-        switch (e.key) {
-            case "w":
-            case "ArrowUp":
-                move(0, -1, "up");
-                break;
-            case "s":
-            case "ArrowDown":
-                move(0, 1, "down");
-                break;
-            case "a":
-            case "ArrowLeft":
-                move(-1, 0, "left");
-                break;
-            case "d":
-            case "ArrowRight":
-                move(1, 0, "right");
-                break;
-            case " ":
-            case "Enter":
-                checkInteraction();
-                break;
-        }
-    });
+    document.addEventListener("keydown", handleKeyDown);
 
     drawMap();
 }
+
+function handleKeyDown(e) {
+    if (dialogBox.style.display === "block") {
+        dialogBox.style.display = "none";
+        isTipDisplayed = false;
+    }
+
+    switch (e.key) {
+        case "w":
+        case "ArrowUp":
+            move(0, -1, "up");
+            break;
+        case "s":
+        case "ArrowDown":
+            move(0, 1, "down");
+            break;
+        case "a":
+        case "ArrowLeft":
+            move(-1, 0, "left");
+            break;
+        case "d":
+        case "ArrowRight":
+            move(1, 0, "right");
+            break;
+        case " ":
+        case "Enter":
+            checkInteraction();
+            break;
+    }
+}
+
 
 function startLoadingAnimation() {
     const btn = document.getElementById("startGameButton");
@@ -363,3 +368,19 @@ document.addEventListener("DOMContentLoaded", () => {
     startLoadingAnimation();
     enableButtonWhenReady();
 });
+
+// End of the game:
+function endGame() {
+    document.removeEventListener("keydown", handleKeyDown);
+    game.style.display = "none";
+    const onlyForMainScreen = document.getElementsByClassName("onlyForMainScreen");
+    onlyForMainScreen[0].style.display = "none";
+    const mobileControls = document.getElementById("mobile-controls");
+    mobileControls.style.display = "none";
+    const eggCounter = document.getElementById("hud");
+    eggCounter.style.display = "none";
+
+    dialogBox.style.display = "block";
+    dialogText.textContent = "Congratulation! You found all the eggs! \n\nThank you for playing my game :)";
+    dialogChoices.style.display = "none";
+}
