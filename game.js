@@ -101,11 +101,13 @@ const npcs = [
     },
 ];
 
+let loadingDotsInterval;
 const game = document.getElementById("game");
 const eggCount = document.getElementById("eggCount");
 const dialogBox = document.getElementById("dialogBox");
 const dialogText = document.getElementById("dialogText");
 const dialogChoices = document.getElementById("dialogChoices");
+const controlPanel = document.getElementById("controls-container");
 
 let pendingTip = null;
 let isTipDisplayed = false;
@@ -264,6 +266,7 @@ function handleChoice(choice) {
         isTipDisplayed = true;
     } else {
         dialogBox.style.display = "none";
+        controlPanel.style.display = "flex";
     }
     pendingTip = null;
 }
@@ -279,35 +282,84 @@ function move(dx, dy, dir) {
     drawMap();
 }
 
-// Functions bound directly to the web page
-document.addEventListener("keydown", (e) => {
-    if (dialogBox.style.display === "block") {
-        dialogBox.style.display = "none";
-        isTipDisplayed = false;
+// Start of the Game:
+function startGame() {
+    const onlyForMainScreen = document.getElementsByClassName("onlyForMainScreen");
+    for (let i = 0; i < onlyForMainScreen.length; i++) {
+        onlyForMainScreen[i].style.display = "none";
     }
 
-    switch (e.key) {
-        case "w":
-        case "ArrowUp":
-            move(0, -1, "up");
-            break;
-        case "s":
-        case "ArrowDown":
-            move(0, 1, "down");
-            break;
-        case "a":
-        case "ArrowLeft":
-            move(-1, 0, "left");
-            break;
-        case "d":
-        case "ArrowRight":
-            move(1, 0, "right");
-            break;
-        case " ":
-        case "Enter":
-            checkInteraction();
-            break;
-    }
+    const startGameButton = document.getElementById("startGameButton");
+    startGameButton.style.display = "none";
+
+    const mainButtonsContainer = document.getElementById("otherChoices");
+    mainButtonsContainer.style.display = "flex";
+
+    const mobileControls = document.getElementById("mobile-controls");
+    mobileControls.style.display = "flex";
+
+    const eggCounter = document.getElementById("hud");
+    eggCounter.style.display = "flex";
+
+    game.style.display = "grid";
+    dialogBox.style.display = "none";
+
+    // Functions bound directly to the web page
+    document.addEventListener("keydown", (e) => {
+        if (dialogBox.style.display === "block") {
+            dialogBox.style.display = "none";
+            isTipDisplayed = false;
+        }
+
+        switch (e.key) {
+            case "w":
+            case "ArrowUp":
+                move(0, -1, "up");
+                break;
+            case "s":
+            case "ArrowDown":
+                move(0, 1, "down");
+                break;
+            case "a":
+            case "ArrowLeft":
+                move(-1, 0, "left");
+                break;
+            case "d":
+            case "ArrowRight":
+                move(1, 0, "right");
+                break;
+            case " ":
+            case "Enter":
+                checkInteraction();
+                break;
+        }
+    });
+
+    drawMap();
+}
+
+function startLoadingAnimation() {
+    const btn = document.getElementById("startGameButton");
+    const baseText = "Loading game files";
+    let dotCount = 0;
+
+    loadingDotsInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        btn.textContent = baseText + ".".repeat(dotCount);
+    }, 500); // alle 0.5 Sekunden ändern
+}
+
+function enableButtonWhenReady() {
+    window.onload = function () {
+        const button = document.getElementById("startGameButton");
+
+        clearInterval(loadingDotsInterval); // ⛔️ Animation stoppen
+        button.disabled = false;
+        button.textContent = "Start Game!";
+    };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    startLoadingAnimation();
+    enableButtonWhenReady();
 });
-
-drawMap();

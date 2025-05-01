@@ -15,7 +15,7 @@ Built entirely with **pure HTML, CSS, and JavaScript** – no frameworks, no dep
 
 ## 🚀 Live Demo
 
-👉 **[Play now](https://easter.manuelhintermayr.com)**  
+👉 **[Play now](https://easter.manuelweb.at)**  
 (No installation needed – runs directly in your browser!)
 
 ## 🧱 Tech Stack
