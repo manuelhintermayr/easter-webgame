@@ -7,7 +7,7 @@ Built entirely with **pure HTML, CSS, and JavaScript** – no frameworks, no dep
 
 ## 🎮 Features
 
-- Move around the office using `W`, `A`, `S`, `D`
+- Move around the office using `W`, `A`, `S`, `D`, `⬆️`, `⬅️`, `⬇️`, `➡️` or a touch D-Pad for mobile
 - Find all **10 hidden Easter eggs**
 - Talk to NPCs for clues
 - Interact with desks, bookshelves, laptops, and more
