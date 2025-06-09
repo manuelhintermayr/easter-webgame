@@ -311,24 +311,30 @@ function drawMap() {
 
 
 function isBlocked(x, y) {
-    if (x < 0 || y < 0 || x >= gameWidth || y >= gameHeight) return true; if (isUpperWall(x, y)) return true;
-    if (isVoid(x, y)) return true;
-    if (eggs.some((e) => e[0] === x && e[1] === y)) return true;
-    if (flowers.some((o) => o[0] === x && o[1] === y)) return true;
-    if (bookshelves.some((o) => o[0] === x && o[1] === y)) return true;
-    if (startLowerDesks.some((o) => o[0] === x && o[1] === y)) return true;
-    if (startUpperDesks.some((o) => o[0] === x && o[1] === y)) return true;
-    if (middleLowerDesks.some((o) => o[0] === x && o[1] === y)) return true;
-    if (middleUpperDesks.some((o) => o[0] === x && o[1] === y)) return true;
-    if (endLowerDesks.some((o) => o[0] === x && o[1] === y)) return true;
-    if (endUpperDesks.some((o) => o[0] === x && o[1] === y)) return true;
-    if (lowerWatercoolers.some((o) => o[0] === x && o[1] === y)) return true;
-    if (upperWatercoolers.some((o) => o[0] === x && o[1] === y)) return true;
-    if (tv.some((o) => o[0] === x && o[1] === y)) return true;
-    if (lowerPcStation.some((o) => o[0] === x && o[1] === y)) return true;
-    if (upperPcStation.some((o) => o[0] === x && o[1] === y)) return true;
-    if (plantsLarge.some((o) => o[0] === x && o[1] === y)) return true;
-    if (npcs.some((n) => n.x === x && n.y === y)) return true;
+    if (x < 0 || y < 0 || x >= gameWidth || y >= gameHeight) return true;
+    if (isUpperWall(x, y) || isVoid(x, y)) return true;
+    if (npcs.some(npc => npc.x === x && npc.y === y)) return true;
+
+    const objectArrays = [
+        eggs,
+        flowers,
+        bookshelves,
+        startLowerDesks,
+        startUpperDesks,
+        middleLowerDesks,
+        middleUpperDesks,
+        endLowerDesks,
+        endUpperDesks,
+        lowerWatercoolers,
+        upperWatercoolers,
+        tv,
+        lowerPcStation,
+        upperPcStation,
+        plantsLarge
+    ];
+    if (objectArrays.some(arr => arr.some(obj => obj[0] === x && obj[1] === y))) {
+        return true;
+    }
 
     return false;
 }
