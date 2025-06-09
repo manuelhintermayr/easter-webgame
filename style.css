@@ -228,6 +228,86 @@ body {
     z-index: 2;
 }
 
+.bookshelf {
+    background-position: -4px -10px;
+    z-index: 2;
+}
+
+.start-lower-desk {
+    background-position: -184px -21px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.start-upper-desk {
+    background-position: -184px 7px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.middle-lower-desk {
+    background-position: -219px -21px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.middle-upper-desk {
+    background-position: -219px 7px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.end-lower-desk {
+    background-position: -238px -21px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.end-upper-desk {
+    background-position: -238px 7px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+
+.lower-watercooler {
+    background-position: -88px -76px;
+    background-size: 243px 150px;
+    z-index: 2;
+}
+
+.upper-watercooler {
+    background-position: -88px -62px;
+    background-size: 243px 150px;
+    top: 11px;
+    height: 21px;
+    z-index: 2;
+}
+
+.tv {
+    background-position: -134px -42px;
+    z-index: 2;
+}
+
+.lower-pc-station {
+    background-size: 243px 150px;
+    background-position: -115px -112px;
+    z-index: 2;
+}
+
+.upper-pc-station {
+    background-size: 243px 150px;
+    background-position: -115px -96px;
+    top: 16px;
+    height: 21px;
+    z-index: 2;
+}
+
+.plant-large {
+    background-position: -182px -94px;
+    z-index: 2;
+}
+
 .void {
     background: black;
     z-index: 1;

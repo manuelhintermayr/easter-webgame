@@ -38,6 +38,68 @@ const flowers = [
 
     // Right:
 ];
+const bookshelves = [
+    [2, 5],
+    [28, 10],
+];
+const startLowerDesks = [
+    [25, 12],
+    [12, 12],
+];
+const startUpperDesks = [
+    [25, 11],
+    [12, 11],
+];
+const middleLowerDesks = [
+    [26, 12],
+    [27, 12],
+    [28, 12],
+    [13, 12],
+    [14, 12],
+    [15, 12],
+    [16, 12],
+];
+const middleUpperDesks = [
+    [26, 11],
+    [27, 11],
+    [28, 11],
+    [13, 11],
+    [14, 11],
+    [15, 11],
+    [16, 11],
+];
+const endLowerDesks = [
+    [29, 12],
+    [17, 12],
+];
+const endUpperDesks = [
+    [29, 11],
+    [17, 11],
+];
+const upperWatercoolers = [
+    [15, 4],
+];
+const lowerWatercoolers = [
+    [15, 5],
+];
+const tv = [
+    [20, 10],
+    [8, 12],
+];
+const upperPcStation = [
+    [3, 8],
+    [28, 3],
+    [19, 2],
+];
+const lowerPcStation = [
+    [3, 9],
+    [28, 4],
+    [19, 3],
+];
+const plantsLarge = [
+    [7, 12],
+    [26, 4],
+];
 const upperWallsRange = [
     // Left:
     [[0, 9], [10, 9]],
@@ -140,6 +202,84 @@ function drawMap() {
                     tile.appendChild(o);
                 }
 
+                if (bookshelves.find(b => b[0] === x && b[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "bookshelf");
+                    tile.appendChild(o);
+                }
+
+                if (startLowerDesks.find(d => d[0] === x && d[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "start-lower-desk");
+                    tile.appendChild(o);
+                }
+
+                if (startUpperDesks.find(d => d[0] === x && d[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "start-upper-desk");
+                    tile.appendChild(o);
+                }
+
+                if (middleLowerDesks.find(d => d[0] === x && d[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "middle-lower-desk");
+                    tile.appendChild(o);
+                }
+
+                if (middleUpperDesks.find(d => d[0] === x && d[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "middle-upper-desk");
+                    tile.appendChild(o);
+                }
+
+                if (endLowerDesks.find(d => d[0] === x && d[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "end-lower-desk");
+                    tile.appendChild(o);
+                }
+
+                if (endUpperDesks.find(d => d[0] === x && d[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "end-upper-desk");
+                    tile.appendChild(o);
+                }
+
+                if (upperWatercoolers.find(w => w[0] === x && w[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "upper-watercooler");
+                    tile.appendChild(o);
+                }
+
+                if (lowerWatercoolers.find(w => w[0] === x && w[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "lower-watercooler");
+                    tile.appendChild(o);
+                }
+
+                if (tv.find(t => t[0] === x && t[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "tv");
+                    tile.appendChild(o);
+                }
+
+                if (upperPcStation.find(p => p[0] === x && p[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "upper-pc-station");
+                    tile.appendChild(o);
+                }
+
+                if (lowerPcStation.find(p => p[0] === x && p[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "lower-pc-station");
+                    tile.appendChild(o);
+                }
+
+                if (plantsLarge.find(p => p[0] === x && p[1] === y)) {
+                    const o = document.createElement("div");
+                    o.classList.add("entity", "plant-large");
+                    tile.appendChild(o);
+                }
+
                 const npc = npcs.find(n => n.x === x && n.y === y);
                 if (npc) {
                     const n = document.createElement("div");
@@ -171,12 +311,23 @@ function drawMap() {
 
 
 function isBlocked(x, y) {
-    if (x < 0 || y < 0 || x >= gameWidth || y >= gameHeight) return true;
-
-    if (isUpperWall(x, y)) return true;
+    if (x < 0 || y < 0 || x >= gameWidth || y >= gameHeight) return true; if (isUpperWall(x, y)) return true;
     if (isVoid(x, y)) return true;
     if (eggs.some((e) => e[0] === x && e[1] === y)) return true;
     if (flowers.some((o) => o[0] === x && o[1] === y)) return true;
+    if (bookshelves.some((o) => o[0] === x && o[1] === y)) return true;
+    if (startLowerDesks.some((o) => o[0] === x && o[1] === y)) return true;
+    if (startUpperDesks.some((o) => o[0] === x && o[1] === y)) return true;
+    if (middleLowerDesks.some((o) => o[0] === x && o[1] === y)) return true;
+    if (middleUpperDesks.some((o) => o[0] === x && o[1] === y)) return true;
+    if (endLowerDesks.some((o) => o[0] === x && o[1] === y)) return true;
+    if (endUpperDesks.some((o) => o[0] === x && o[1] === y)) return true;
+    if (lowerWatercoolers.some((o) => o[0] === x && o[1] === y)) return true;
+    if (upperWatercoolers.some((o) => o[0] === x && o[1] === y)) return true;
+    if (tv.some((o) => o[0] === x && o[1] === y)) return true;
+    if (lowerPcStation.some((o) => o[0] === x && o[1] === y)) return true;
+    if (upperPcStation.some((o) => o[0] === x && o[1] === y)) return true;
+    if (plantsLarge.some((o) => o[0] === x && o[1] === y)) return true;
     if (npcs.some((n) => n.x === x && n.y === y)) return true;
 
     return false;
