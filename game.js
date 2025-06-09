@@ -180,10 +180,26 @@ let mapInitialized = false;
 
 function drawMap() {
     if (!mapInitialized) {
-        // Map initial zum ersten Mal zeichnen
         game.innerHTML = "";
         game.style.gridTemplateColumns = `repeat(${gameWidth}, 32px)`;
         game.style.gridTemplateRows = `repeat(${gameHeight}, 32px)`;
+
+        const objectMap = [
+            { arr: flowers, className: "flower" },
+            { arr: bookshelves, className: "bookshelf" },
+            { arr: startLowerDesks, className: "start-lower-desk" },
+            { arr: startUpperDesks, className: "start-upper-desk" },
+            { arr: middleLowerDesks, className: "middle-lower-desk" },
+            { arr: middleUpperDesks, className: "middle-upper-desk" },
+            { arr: endLowerDesks, className: "end-lower-desk" },
+            { arr: endUpperDesks, className: "end-upper-desk" },
+            { arr: upperWatercoolers, className: "upper-watercooler" },
+            { arr: lowerWatercoolers, className: "lower-watercooler" },
+            { arr: tv, className: "tv" },
+            { arr: upperPcStation, className: "upper-pc-station" },
+            { arr: lowerPcStation, className: "lower-pc-station" },
+            { arr: plantsLarge, className: "plant-large" },
+        ];
 
         for (let y = 0; y < gameHeight; y++) {
             for (let x = 0; x < gameWidth; x++) {
@@ -196,90 +212,16 @@ function drawMap() {
                 if (isLowerWall(x, y)) tile.classList.add("wall_below");
                 if (isVoid(x, y)) tile.classList.add("void");
 
-                if (flowers.find(f => f[0] === x && f[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "flower");
-                    tile.appendChild(o);
+                // Add objects
+                for (const obj of objectMap) {
+                    if (obj.arr.find(o => o[0] === x && o[1] === y)) {
+                        const oDiv = document.createElement("div");
+                        oDiv.classList.add("entity", obj.className);
+                        tile.appendChild(oDiv);
+                    }
                 }
 
-                if (bookshelves.find(b => b[0] === x && b[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "bookshelf");
-                    tile.appendChild(o);
-                }
-
-                if (startLowerDesks.find(d => d[0] === x && d[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "start-lower-desk");
-                    tile.appendChild(o);
-                }
-
-                if (startUpperDesks.find(d => d[0] === x && d[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "start-upper-desk");
-                    tile.appendChild(o);
-                }
-
-                if (middleLowerDesks.find(d => d[0] === x && d[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "middle-lower-desk");
-                    tile.appendChild(o);
-                }
-
-                if (middleUpperDesks.find(d => d[0] === x && d[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "middle-upper-desk");
-                    tile.appendChild(o);
-                }
-
-                if (endLowerDesks.find(d => d[0] === x && d[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "end-lower-desk");
-                    tile.appendChild(o);
-                }
-
-                if (endUpperDesks.find(d => d[0] === x && d[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "end-upper-desk");
-                    tile.appendChild(o);
-                }
-
-                if (upperWatercoolers.find(w => w[0] === x && w[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "upper-watercooler");
-                    tile.appendChild(o);
-                }
-
-                if (lowerWatercoolers.find(w => w[0] === x && w[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "lower-watercooler");
-                    tile.appendChild(o);
-                }
-
-                if (tv.find(t => t[0] === x && t[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "tv");
-                    tile.appendChild(o);
-                }
-
-                if (upperPcStation.find(p => p[0] === x && p[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "upper-pc-station");
-                    tile.appendChild(o);
-                }
-
-                if (lowerPcStation.find(p => p[0] === x && p[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "lower-pc-station");
-                    tile.appendChild(o);
-                }
-
-                if (plantsLarge.find(p => p[0] === x && p[1] === y)) {
-                    const o = document.createElement("div");
-                    o.classList.add("entity", "plant-large");
-                    tile.appendChild(o);
-                }
-
+                // NPCs
                 const npc = npcs.find(n => n.x === x && n.y === y);
                 if (npc) {
                     const n = document.createElement("div");
