@@ -229,7 +229,7 @@ body {
 }
 
 .bookshelf {
-    background-position: -4px -10px;
+    background-position: -13px -8px;
     z-index: 2;
 }
 
@@ -242,7 +242,7 @@ body {
 .start-upper-desk {
     background-position: -184px 7px;
     background-size: 284px 175px;
-    z-index: 2;
+    z-index: 11;
 }
 
 .middle-lower-desk {
@@ -254,7 +254,7 @@ body {
 .middle-upper-desk {
     background-position: -219px 7px;
     background-size: 284px 175px;
-    z-index: 2;
+    z-index: 11;
 }
 
 .end-lower-desk {
@@ -266,7 +266,7 @@ body {
 .end-upper-desk {
     background-position: -238px 7px;
     background-size: 284px 175px;
-    z-index: 2;
+    z-index: 11;
 }
 
 
