@@ -1,0 +1,314 @@
+/** Base Styles **/
+body {
+    margin: 0;
+    background: #000;
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+#hud {
+    margin-top: 10px;
+    background: #000;
+    padding: 5px 15px;
+    font-family: monospace;
+    font-size: 18px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: repeat(10, 32px);
+    grid-template-rows: repeat(10, 32px);
+    gap: 0;
+    margin-top: 10px;
+    image-rendering: pixelated;
+}
+
+#dialogBox {
+    margin-top: 10px;
+    width: 320px;
+    min-height: 80px;
+    background: #f4e9cd;
+    border: 3px double #222;
+    box-shadow: 4px 4px 0 #000;
+    padding: 10px;
+    color: #111;
+    font-family: monospace;
+    font-size: 14px;
+    position: relative;
+}
+
+#dialogText {
+    padding-bottom: 15px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dialog-buttons button {
+    background: #fff;
+    border: 2px solid #000;
+    font-family: monospace;
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 2px 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.dialog-buttons button:hover {
+    background: #eee;
+    transform: scale(1.05);
+}
+
+/** Mobile Controls **/
+#controls-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    /* Damit es auf kleinen Geräten untereinander springt */
+}
+
+#controls-hint {
+    margin-top: 15px;
+    background: #434343;
+    color: #fff;
+    padding: 10px 15px;
+    text-align: left;
+    border: 8px double #222;
+    box-shadow: 5px 5px 0 #0b0b0b;
+}
+
+.kbd {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 14px;
+    font-family: monospace;
+    margin: 0 2px;
+}
+
+#mobile-controls {
+    text-align: center;
+}
+
+.dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.dpad div {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.dpad button {
+    font-size: 24px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 2px 2px 0 #aaa;
+    cursor: pointer;
+}
+
+
+/** Game Styles **/
+.tile,
+.tile.wall_below::after {
+    width: 32px;
+    height: 32px;
+    position: relative;
+
+    background-color: #cbbd94;
+    background-image: linear-gradient(to right,
+            #a39067 1px,
+            transparent 1px),
+        linear-gradient(to bottom, #a39067 1px, transparent 1px),
+        linear-gradient(to right, #b4a677 1px, transparent 1px),
+        linear-gradient(to bottom, #b4a677 1px, transparent 1px);
+    background-size: 8px 8px, 8px 8px, 32px 32px, 32px 32px;
+}
+
+.tile.wall_above {
+    background-image: linear-gradient(to bottom,
+            #b78c75 0px,
+            #b78c75 4px,
+            #8f5d4a 4px,
+            #8f5d4a 8px,
+            #4f3a2f 8px,
+            #4f3a2f 12px,
+            #2e1d18 12px,
+            #2e1d18 14px,
+            #a7a180 14px,
+            #a7a180 17px,
+            #cbbd94 17px,
+            #cbbd94 100%);
+    background-size: 100% 32px;
+    background-repeat: no-repeat;
+}
+
+.tile.wall_below {
+    background-color: #cbbd94;
+    background-image: linear-gradient(to bottom,
+            #cbbd94 0px,
+            #cbbd94 10px,
+            #b98b70 10px,
+            #b98b70 14px,
+            #4e362e 14px,
+            #4e362e 18px,
+            #cbbd94 18px,
+            #cbbd94 100%);
+    background-size: 100% 32px;
+    background-repeat: no-repeat;
+}
+
+.tile.wall_below::after {
+    content: "";
+    display: grid;
+    height: 14px;
+    bottom: 0;
+    position: absolute;
+    background-position-y: bottom;
+}
+
+.entity {
+    background-image: url("sprites.png");
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-size: 210px 140px;
+}
+
+.player {
+    background-image: url("player.png");
+    background-size: 133px 32px;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: 10;
+    /* background-size: auto; */
+}
+
+.npc {
+    background-position: -105px -11px;
+    background-size: 300px 185px;
+    z-index: 2;
+}
+
+.egg {
+    background-position: -38px 2px;
+    z-index: 1;
+}
+
+.flower {
+    background-position: -44px -32px;
+    z-index: 2;
+}
+
+.bookshelf {
+    background-position: -13px -8px;
+    z-index: 2;
+}
+
+.start-lower-desk {
+    background-position: -184px -21px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.start-upper-desk {
+    background-position: -184px 7px;
+    background-size: 284px 175px;
+    z-index: 11;
+}
+
+.middle-lower-desk {
+    background-position: -219px -21px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.middle-upper-desk {
+    background-position: -219px 7px;
+    background-size: 284px 175px;
+    z-index: 11;
+}
+
+.end-lower-desk {
+    background-position: -238px -21px;
+    background-size: 284px 175px;
+    z-index: 2;
+}
+
+.end-upper-desk {
+    background-position: -238px 7px;
+    background-size: 284px 175px;
+    z-index: 11;
+}
+
+
+.lower-watercooler {
+    background-position: -88px -76px;
+    background-size: 243px 150px;
+    z-index: 2;
+}
+
+.upper-watercooler {
+    background-position: -88px -62px;
+    background-size: 243px 150px;
+    top: 11px;
+    height: 21px;
+    z-index: 2;
+}
+
+.tv {
+    background-position: -134px -42px;
+    z-index: 2;
+}
+
+.lower-pc-station {
+    background-size: 243px 150px;
+    background-position: -115px -112px;
+    z-index: 2;
+}
+
+.upper-pc-station {
+    background-size: 243px 150px;
+    background-position: -115px -96px;
+    top: 16px;
+    height: 21px;
+    z-index: 2;
+}
+
+.plant-large {
+    background-position: -182px -94px;
+    z-index: 2;
+}
+
+.void {
+    background: black;
+    z-index: 1;
+}
